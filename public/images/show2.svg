@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1200" viewBox="0 0 800 1200">
-  <rect width="100%" height="100%" fill="#111" />
-  <rect x="30" y="30" width="740" height="1140" rx="12" fill="#fff" />
-  <text x="60" y="220" font-family="Georgia, serif" font-size="56" fill="#d32f2f">COMÉDIE DU SOIR</text>
-  <text x="60" y="300" font-family="Arial" font-size="18" fill="#333">Rires assurés</text>
-  <rect x="60" y="920" width="200" height="36" rx="6" fill="#d32f2f" />
-  <text x="72" y="945" font-family="Arial" font-size="18" fill="#fff">€18</text>
-</svg>
