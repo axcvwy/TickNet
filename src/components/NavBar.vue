@@ -1,50 +1,32 @@
 <template>
-  <header class="bg-white shadow">
-    <div class="mx-auto h-16 max-w-7xl items-center gap-8 px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16">
-        <div class="flex items-center gap-6">
-          <a class="text-2xl font-bold text-indigo-600" href="#">TickNet</a>
-
-          <nav class="hidden lg:flex items-center gap-4 text-sm">
-            <a href="#" class="hover:text-indigo-600">Événements</a>
-            <a href="#" class="hover:text-indigo-600">Billets</a>
-            <a href="#" class="hover:text-indigo-600">Aide</a>
-          </nav>
-        </div>
-
-        <div class="flex items-center gap-4">
-          <div class="hidden md:block">
-            <input placeholder="Rechercher..." class="border rounded-lg px-3 py-1 text-sm" />
-          </div>
-
-          <div class="flex items-center gap-3">
-            <button class="text-sm px-3 py-1 border rounded hover:bg-gray-100">Connexion</button>
-            <button class="text-sm px-3 py-1 bg-indigo-600 text-white rounded hover:bg-indigo-700">S'inscrire</button>
-
-            <!-- mobile menu button -->
-            <button @click="open = !open" class="lg:hidden p-2 rounded-md hover:bg-gray-100">
-              <svg v-if="!open" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-              <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
-        </div>
+  <nav class="w-full">
+    <div class="max-w-7xl mx-auto px-4 flex items-center h-20">
+      <!-- Logo -->
+      <a href="/" class="flex items-center mr-8">
+        <span class="inline-block -rotate-6 bg-orange-500 rounded-bl-lg rounded-br-lg px-4 py-1 text-white font-bold text-xl mr-2" style="font-family: sans-serif; letter-spacing: 0.5px; height:40px; display:flex; align-items:center;">
+          TickNet
+        </span>
+      </a>
+      <!-- Nav Links center -->
+      <div class="flex-1 flex gap-7">
+        <a href="/sports" class="text-gray-800 hover:text-purple-700 font-medium text-base transition">Théâtre</a>
+        <a href="/sports" class="text-gray-800 hover:text-purple-700 font-medium text-base transition">Comédie</a>
+        <a href="/sports" class="text-gray-800 hover:text-purple-700 font-medium text-base transition">Festivals</a>
+        <a href="/sports" class="text-gray-800 hover:text-purple-700 font-medium text-base transition">Concert</a>
+        <a href="/sports" class="text-gray-800 hover:text-purple-700 font-medium text-base transition">Musique</a>
       </div>
-
-      <!-- mobile menu -->
-      <div v-if="open" class="lg:hidden py-2">
-        <a class="block py-2" href="#">Événements</a>
-        <a class="block py-2" href="#">Billets</a>
-        <a class="block py-2" href="#">Aide</a>
+      <!-- Right links and avatar -->
+      <div class="flex items-center gap-6">
+        <a href="/favorites" class="text-gray-800 hover:text-purple-700 text-base font-medium transition">Favorites</a>
+        <a href="/tickets" class="text-gray-800 hover:text-purple-700 text-base font-medium transition">My Tickets</a>
+        <a href="/login" class="flex items-center gap-1 text-gray-800 hover:text-purple-700">
+          <span>Sign In</span>
+          <svg class="w-7 h-7 text-purple-600 ml-2" fill="currentColor" viewBox="0 0 24 24">
+            <circle cx="12" cy="8" r="4" />
+            <path d="M12 14c-4.418 0-8 1.791-8 4v2c0 .553.447 1 1 1h14c.553 0 1-.447 1-1v-2c0-2.209-3.582-4-8-4z"/>
+          </svg>
+        </a>
       </div>
     </div>
-  </header>
+  </nav>
 </template>
-
-<script setup>
-import { ref } from 'vue'
-const open = ref(false)
-</script>

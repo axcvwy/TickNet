@@ -2,25 +2,15 @@
   <div class="flex-1">
     <Navbar />
 
+
+
     <!-- HERO -->
     <header class="">
-      <div class="bg-linear-to-r from-orange-600 to-orange-600 text-white mx-auto max-w-7xl p-10 rounded-2xl">
-        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-          <div class="max-w-2xl">
-            <h1 class="text-4xl md:text-5xl font-extrabold leading-tight mb-4">
-              Trouvez vos billets pour les meilleurs événements
-            </h1>
-            <p class="text-lg text-blue-100">
-              Concerts, sports, théâtre — comparez et achetez en toute confiance.
-            </p>
-          </div>
-
-          <div class="hidden md:block w-1/3">
-            <img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=1200&q=80&auto=format&fit=crop" alt="hero" class="rounded-lg shadow-lg object-cover w-full h-64" />
-          </div>
-        </div>
-      </div>
+      <HeroSearch class="mt-4" placeholder="Search events, artists, teams, and more..." />
+      <TrendSlider :events="trendEvents" />
     </header>
+
+    <TypeFilter v-model="selectedType" @filter-changed="onFilterChanged" />
 
     <!-- Tendances / Carrousel -->
     <section class="max-w-7xl mx-auto px-4 py-10">
@@ -58,11 +48,13 @@
 <script setup>
 import { ref } from 'vue'
 import Navbar from '../components/Navbar.vue'
-import HeroSearch from '../components/HeroSearch.vue'
 import EventCarousel from '../components/EventCarousel.vue'
 import CategoryCard from '../components/CategoryCard.vue'
 import EventCard from '../components/EventCard.vue'
 import Footer from '../components/Footer.vue'
+import TrendSlider from '@/components/TrendSlider.vue'
+import HeroSearch from '../components/HeroSearch.vue'
+import TypeFilter from '@/components/TypeFilter.vue'
 
 const topEvents = ref([
   { id: 1, title: "Coldplay — Paris", price: 45, img: "https://picsum.photos/600/400?random=11" },
@@ -92,4 +84,5 @@ const events = ref([
 function handleSearch(q) {
   console.log('Recherche effectuée :', q)
 }
+
 </script>
