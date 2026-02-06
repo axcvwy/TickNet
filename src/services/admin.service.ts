@@ -3,7 +3,7 @@ const API_URL = '/api';
 export interface DashboardStats {
     totalSales: number;
     totalReservations: number;
-    // Add other stats as backend provides
+    // spectacles: number;
 }
 
 export interface UserDTO {
@@ -20,14 +20,7 @@ export const adminService = {
     async getDashboardStats(): Promise<DashboardStats> {
         const response = await fetch(`${API_URL}/admin/dashboard`, {
             headers: {
-                'Authorization': `Bearer ${JSON.parse(localStorage.getItem('user') || '{}').token || ''}` // Use token if available, though currently we might rely on cookie/session if backend uses it, but authService stores 'user' in localStorage. The previous `login` didn't explicitly save a token field in `User` interface in the successful response, but `User` interface has `token?`. I'll assume standard fetch for now or add Auth header if needed.
-                // Actually `auth.service.ts` just stores the user object. If backend is stateless (JWT), we need the token.
-                // The backend likely relies on Basic Auth or Session?
-                // The user said "it works with the backend".
-                // I'll assume no special header needed if it's session based or if credentials are included?
-                // Wait, `fetch` needs `credentials: 'include'` if cookie based.
-                // Or if JWT is in `User` object.
-                // Let's check `User` interface in `auth.service.ts`.
+                'Authorization': `Bearer ${JSON.parse(localStorage.getItem('user') || '{}').token || ''}`
             }
         });
         if (!response.ok) throw new Error('Failed to fetch stats');
