@@ -1,86 +1,91 @@
 <template>
-  <div class="w-full max-w-4xl mx-auto relative">
-    <div class="flex items-center bg-white rounded-full shadow px-5 py-4">
-      <svg class="w-6 h-6 text-purple-600 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+  <div class="w-full max-w-4xl mx-auto relative px-4 sm:px-6">
+    <div class="flex items-center bg-white rounded-2xl sm:rounded-3xl shadow-xl sm:shadow-2xl px-4 sm:px-6 py-3 sm:py-5 border border-orange-100 focus-within:ring-2 sm:focus-within:ring-4 focus-within:ring-orange-200/50 transition-all duration-300">
+      <svg class="w-5 h-5 sm:w-7 sm:h-7 text-orange-500 mr-3 sm:mr-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
       </svg>
       <input
         v-model="search"
         @input="onInput"
         @keydown.down.prevent="move(+1)"
         @keydown.up.prevent="move(-1)"
-        @keydown.enter.prevent="select"
+        @keydown.enter.prevent="select()"
         type="text"
         :placeholder="placeholder"
-        class="flex-1 bg-transparent outline-none text-lg"
+        class="flex-1 bg-transparent outline-none text-base sm:text-xl text-gray-800 placeholder-gray-400 font-medium"
         autocomplete="off"
       />
     </div>
     <!-- Suggestions Dropdown -->
     <div v-if="showDropdown && suggestions.length > 0"
-         class="absolute top-full left-0 w-full bg-white rounded-xl shadow-lg mt-2 z-50 overflow-hidden">
+         class="absolute top-full left-4 right-4 sm:left-6 sm:right-6 bg-white rounded-2xl sm:rounded-3xl shadow-xl sm:shadow-[0_20px_50px_rgba(0,0,0,0.15)] mt-3 sm:mt-4 z-50 overflow-hidden border border-gray-100 max-h-[60vh] overflow-y-auto">
       <div v-for="(item, idx) in suggestions" :key="item.id"
            @mousedown.prevent="select(item)"
            :class="[
-             'flex items-center px-5 py-3 cursor-pointer transition',
-             idx===selectedIdx ? 'bg-purple-100' : 'hover:bg-purple-50'
+             'flex items-center px-4 sm:px-6 py-3 sm:py-5 cursor-pointer transition-all duration-200',
+             idx===selectedIdx ? 'bg-indigo-950 text-white' : 'hover:bg-gray-50'
            ]">
-        <img :src="item.img" class="w-9 h-9 rounded-lg mr-3 bg-gray-200 object-cover" alt="">
-        <div class="flex-1">
-          <div class="font-semibold text-gray-900">{{ item.title }}</div>
-          <div class="text-xs text-gray-400">{{ item.type }}</div>
+        <img :src="item.image" class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl mr-3 sm:mr-5 bg-gray-200 object-cover shadow-md flex-shrink-0" alt="">
+        <div class="flex-1 min-w-0">
+          <div :class="['font-bold text-sm sm:text-lg leading-tight truncate', idx===selectedIdx ? 'text-white' : 'text-gray-900']">{{ item.title }}</div>
+          <div :class="['text-xs sm:text-sm font-semibold mt-1 uppercase tracking-wider', idx===selectedIdx ? 'text-orange-400' : 'text-orange-600']">{{ item.category }}</div>
         </div>
-        <div class="text-gray-500 text-xs">{{ item.count }}</div>
+        <div :class="['text-xs sm:text-sm font-medium ml-2 flex-shrink-0', idx===selectedIdx ? 'text-orange-200' : 'text-gray-400']">{{ item.date }}</div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
+import { ref, watch } from 'vue'
+import { useRouter } from 'vue-router'
+import { EventService, type Event } from '@/services/event.service'
 
-const props = defineProps<{ placeholder?: string }>()
+const router = useRouter()
+
+defineProps<{ placeholder?: string }>()
+const emit = defineEmits(['search'])
+
 const search = ref('')
 const showDropdown = ref(false)
 const selectedIdx = ref(0)
-const suggestions = ref<any[]>([])
+const suggestions = ref<Event[]>([])
 
-// Dummy data for demo. In prod, fetch from API
-const data = [
-  { id: 1, title: 'Sabrina Carpenter', img: 'https://randomuser.me/api/portraits/women/1.jpg', type: 'Concert Tickets', count: '20 events' },
-  { id: 2, title: 'Sabrina Claudio', img: 'https://randomuser.me/api/portraits/women/2.jpg', type: 'Concert Tickets', count: '28 events' },
-  { id: 3, title: 'Joaquin Sabina', img: 'https://randomuser.me/api/portraits/men/3.jpg', type: 'Concert Tickets', count: '3 events' },
-  { id: 4, title: 'Sabrina Carpenter Night', img: 'https://randomuser.me/api/portraits/women/4.jpg', type: 'Theater Tickets', count: '0 events' },
-]
-
-function onInput() {
+async function onInput() {
   showDropdown.value = !!search.value
   if (search.value.length === 0) {
     suggestions.value = []
+    emit('search', '')
     return
   }
-  // Replace with API call if needed
-  suggestions.value = data.filter(d =>
-    d.title.toLowerCase().includes(search.value.toLowerCase())
-  )
+
+  // Real API search
+  const results = await EventService.searchEvents(search.value)
+  suggestions.value = results.slice(0, 6) // limit suggestions
   selectedIdx.value = 0
+
+  // Also emit search for real-time grid filtering
+  emit('search', search.value)
 }
 
 function move(dir: number) {
   selectedIdx.value = Math.max(0, Math.min(suggestions.value.length - 1, selectedIdx.value + dir))
 }
 
-function select(item?: any) {
+function select(item?: Event) {
   const val = item || suggestions.value[selectedIdx.value]
   if (val) {
     search.value = val.title
     showDropdown.value = false
-    // Emit the selection
-    // Use your event logic here
+    emit('search', val.title)
+    router.push({ name: 'spectacle-detail', params: { id: val.id } })
   }
 }
 
 watch(search, val => {
-  if (!val) showDropdown.value = false
+  if (!val) {
+    showDropdown.value = false
+    emit('search', '')
+  }
 })
 </script>
