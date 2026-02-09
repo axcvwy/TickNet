@@ -158,6 +158,7 @@ import { useRoute, useRouter } from 'vue-router'
 import Navbar from '../components/NavBar.vue'
 import AppFooter from '@/components/AppFooter.vue'
 import { EventService, type Spectacle, type Session } from '../services/event.service'
+import { CartService } from '@/services/cart.service'
 
 const route = useRoute()
 const router = useRouter()
@@ -196,8 +197,20 @@ function selectSession(session: Session) {
 
 function handleBooking() {
   if (!selectedSessionId.value) return
-  // Redirect to booking flow with chosen session
-  router.push({ name: 'home' }) // placeholder, we'll build booking next
+  const session = sessions.value.find(s => s.id === selectedSessionId.value)
+  if (!session) return
+
+  // Add to local cart and navigate to panier
+  CartService.addItem({
+    seanceId: session.id,
+    spectacleTitre: spectacle.value?.titre || '',
+    dateHeure: session.dateHeure,
+    salleNom: session.salle?.nom,
+    unitPrice: session.prix,
+    quantity: 1
+  })
+
+  router.push({ name: 'panier' })
 }
 
 function formatDateLarge(dateStr: string) {

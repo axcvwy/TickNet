@@ -39,6 +39,17 @@ const router = createRouter({
       name: 'spectacle-detail',
       component: () => import('../views/SpectacleDetailView.vue')
     }
+    ,
+    {
+      path: '/panier',
+      name: 'panier',
+      component: () => import('../views/PanierView.vue')
+    },
+    {
+      path: '/paiement/succes',
+      name: 'paiement-succes',
+      component: () => import('../views/PaiementSuccessView.vue')
+    }
   ],
 })
 
