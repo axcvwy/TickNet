@@ -48,8 +48,11 @@ export const CartService = {
     const items = load();
     const idx = items.findIndex(i => i.seanceId === seanceId);
     if (idx === -1) return;
-    items[idx].quantity = Math.max(1, quantity);
-    save(items);
+    const item = items[idx];
+    if (item) {
+      item.quantity = Math.max(1, quantity);
+      save(items);
+    }
   },
 
   removeItem(seanceId: number) {
