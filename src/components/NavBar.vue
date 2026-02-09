@@ -16,6 +16,7 @@
           <RouterLink to="/category/danse" class="text-gray-800 hover:text-orange-500 font-medium text-sm xl:text-base transition whitespace-nowrap">Danse</RouterLink>
           <RouterLink to="/category/comedie" class="text-gray-800 hover:text-orange-500 font-medium text-sm xl:text-base transition whitespace-nowrap">Comédie</RouterLink>
           <RouterLink to="/category/arts-visuels" class="text-gray-800 hover:text-orange-500 font-medium text-sm xl:text-base transition whitespace-nowrap">Arts visuels</RouterLink>
+          <RouterLink v-if="authState.isAuthenticated" to="/mes-reservations" class="text-gray-800 hover:text-orange-500 font-medium text-sm xl:text-base transition whitespace-nowrap">Mes réservations</RouterLink>
         </div>
 
         <!-- Right side - Desktop -->
@@ -53,6 +54,7 @@
         <RouterLink @click="mobileMenuOpen = false" to="/category/danse" class="block px-4 py-2 text-gray-800 hover:bg-orange-50 hover:text-orange-500 font-medium rounded-lg transition">Danse</RouterLink>
         <RouterLink @click="mobileMenuOpen = false" to="/category/comedie" class="block px-4 py-2 text-gray-800 hover:bg-orange-50 hover:text-orange-500 font-medium rounded-lg transition">Comédie</RouterLink>
         <RouterLink @click="mobileMenuOpen = false" to="/category/arts-visuels" class="block px-4 py-2 text-gray-800 hover:bg-orange-50 hover:text-orange-500 font-medium rounded-lg transition">Arts visuels</RouterLink>
+        <RouterLink v-if="authState.isAuthenticated" @click="mobileMenuOpen = false" to="/mes-reservations" class="block px-4 py-2 text-gray-800 hover:bg-orange-50 hover:text-orange-500 font-medium rounded-lg transition">Mes réservations</RouterLink>
 
         <div class="border-t border-gray-100 pt-3 mt-3">
           <div v-if="authState.isAuthenticated" class="px-4 space-y-2">

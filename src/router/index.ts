@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import AdminDashboardView from '../views/AdminDashboardView.vue'
+import MesReservationsView from '../views/MesReservationsView.vue'
 import { authState } from '../services/auth.service'
 
 const router = createRouter({
@@ -49,8 +50,17 @@ const router = createRouter({
       path: '/paiement/succes',
       name: 'paiement-succes',
       component: () => import('../views/PaiementSuccessView.vue')
+    },
+    {
+      path: '/mes-reservations',
+      name: 'mes-reservations',
+      component: MesReservationsView,
+      meta: { requiresAuth: true }
     }
   ],
+  scrollBehavior() {
+    return { top: 0 }
+  }
 })
 
 router.beforeEach((to, from, next) => {

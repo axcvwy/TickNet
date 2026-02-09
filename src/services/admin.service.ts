@@ -158,11 +158,19 @@ export const adminService = {
     },
 
     async deleteReservation(id: number): Promise<void> {
-        const response = await fetch(`${API_URL}/reservations/${id}`, {
-            method: 'DELETE'
+        // Backend exposes a PATCH endpoint to mark reservation as cancelled
+        const response = await fetch(`${API_URL}/reservations/${id}/cancel`, {
+            method: 'PATCH'
         });
-        if (!response.ok) throw new Error('Failed to delete reservation');
-    }
+        if (!response.ok) throw new Error('Failed to cancel reservation');
+    },
+
+    async cancelReservation(id: number): Promise<void> {
+        const response = await fetch(`${API_URL}/reservations/${id}/cancel`, {
+            method: 'PATCH'
+        });
+        if (!response.ok) throw new Error("Failed to cancel reservation");
+    },
 };
 
 export interface Spectacle {
