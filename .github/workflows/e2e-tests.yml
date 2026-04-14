@@ -21,7 +21,7 @@ jobs:
       with:
         repository: axcvwy/TickNet_backend
         path: backend
-        # token: ${{ secrets.GITHUB_PAT }} # Uncomment if backend repo is private
+        # token: ${{ secrets.GITHUB_PAT }}
 
     - name: Checkout Selenium Tests
       uses: actions/checkout@v4
