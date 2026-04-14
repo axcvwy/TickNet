@@ -46,11 +46,12 @@
             />
           </div>
 
-          <div v-if="error" class="p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
+          <div id="errorMsg" v-if="error" class="p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
             {{ error }}
           </div>
 
           <button
+            id="login-btn"
             type="submit"
             :disabled="loading"
             class="w-full py-2.5 px-4 bg-orange-600 hover:bg-orange-700 text-white font-semibold rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl"
