@@ -45,7 +45,7 @@ jobs:
         mvn spring-boot:run &
 
     - name: Wait for Backend
-      run: npx wait-on http://localhost:8080
+      run: npx wait-on -t 120000 tcp:localhost:8080 || (cat backend/backend.log && exit 1)
 
     - name: Start Frontend
       run: |
