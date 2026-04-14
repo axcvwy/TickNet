@@ -14,7 +14,7 @@ jobs:
     - name: Checkout Frontend
       uses: actions/checkout@v4
       with:
-        path: frontend # Clones the repo that triggered the action here eee
+        path: frontend # Clones the repo that triggered the action here eeee
 
     - name: Checkout Backend
       uses: actions/checkout@v4
